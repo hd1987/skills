@@ -6,4 +6,4 @@
 
 | Skill | 描述 | 使用方式 |
 | --- | --- | --- |
-| [English Coach](./english-coach/SKILL.md) | 通过对话、课程、语法与词汇练习、写作反馈、纠错、角色扮演、复习和学习规划，帮助用户学习与练习英语。 | 输入 `$english-coach`，并说明学习目标，例如：`$english-coach 帮我练习工作场景英语口语`。 |
+| [English Coach](./english-coach/SKILL.md) | 中英翻译、英文查词与发音说明。 | 输入 `$english-coach`，然后提供需要翻译或解释的内容，例如：`$english-coach explain "idempotent"`。 |

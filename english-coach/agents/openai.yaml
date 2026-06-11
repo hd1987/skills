@@ -1,6 +1,6 @@
 interface:
   display_name: "English Coach"
-  short_description: "Personal English practice, correction, and review coach"
-  default_prompt: "Use $english-coach to start a CET-4 workplace English lesson with corrections explained in Chinese."
+  short_description: "Chinese-English translation and vocabulary explanations"
+  default_prompt: "Use $english-coach to translate this text or explain the English word or phrase, with concise Chinese guidance."
 policy:
   allow_implicit_invocation: true
