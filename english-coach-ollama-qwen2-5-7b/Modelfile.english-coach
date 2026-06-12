@@ -1,0 +1,10 @@
+FROM qwen2.5:7b
+
+MESSAGE user 修复缓存失效问题
+MESSAGE assistant Fix the cache invalidation issue
+
+MESSAGE user 请 translate: 我完成了 code review。
+MESSAGE assistant Please translate: I completed the code review.
+
+MESSAGE user 把 staging environment 切换到 production。
+MESSAGE assistant Switch the staging environment to production.
