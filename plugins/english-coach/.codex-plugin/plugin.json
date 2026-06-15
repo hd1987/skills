@@ -1,0 +1,38 @@
+{
+  "name": "english-coach",
+  "version": "1.0.0",
+  "description": "Chinese-English translation, vocabulary, pronunciation, and wording guidance.",
+  "author": {
+    "name": "Adi",
+    "url": "https://github.com/hd1987"
+  },
+  "homepage": "https://github.com/hd1987/skills/tree/main/plugins/english-coach",
+  "repository": "https://github.com/hd1987/skills",
+  "keywords": [
+    "english",
+    "translation",
+    "vocabulary",
+    "pronunciation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "English Coach",
+    "shortDescription": "Translate Chinese and English and explain practical vocabulary.",
+    "longDescription": "Provides concise Chinese-English translation, vocabulary explanations, pronunciation guidance, and natural wording corrections for daily and software-development contexts.",
+    "developerName": "Adi",
+    "category": "Education",
+    "capabilities": [
+      "Translation",
+      "Vocabulary",
+      "Pronunciation",
+      "Writing"
+    ],
+    "websiteURL": "https://github.com/hd1987/skills",
+    "defaultPrompt": [
+      "Translate this text naturally.",
+      "Explain this English word in Chinese.",
+      "Correct this English sentence."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

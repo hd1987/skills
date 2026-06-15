@@ -1,0 +1,19 @@
+{
+  "name": "adi-skills",
+  "owner": {
+    "name": "Adi"
+  },
+  "description": "Adi's personal Agent Skills for Claude Code.",
+  "plugins": [
+    {
+      "name": "english-coach",
+      "source": "./plugins/english-coach",
+      "description": "Chinese-English translation, vocabulary, pronunciation, and wording guidance.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Adi"
+      },
+      "category": "Education"
+    }
+  ]
+}

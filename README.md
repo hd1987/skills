@@ -1,10 +1,52 @@
-# Skills
+# Adi Skills
 
-这是一个可复用的 Agent Skill 集合。每个 Skill 保持独立、可移植，并尽量避免依赖特定机器、用户或运行平台。
+这是 Adi 的个人 Agent Skill 集合，通过仓库级插件市场同时分发给 Codex
+和 Claude Code。每个 Skill 对应一个独立插件，两端共用同一份 `SKILL.md`。
+
+目前仅包含 `english-coach`。
+
+## Codex
+
+```bash
+codex plugin marketplace add hd1987/skills
+codex plugin add english-coach@adi-skills
+```
+
+本地开发时可以直接添加仓库路径：
+
+```bash
+codex plugin marketplace add /path/to/skills
+codex plugin add english-coach@adi-skills
+```
+
+调用：
+
+```text
+/english-coach:english-coach
+```
+
+## Claude Code
+
+```bash
+claude plugin marketplace add hd1987/skills
+claude plugin install english-coach@adi-skills
+```
+
+本地开发时可以直接添加仓库路径：
+
+```bash
+claude plugin marketplace add /path/to/skills
+claude plugin install english-coach@adi-skills
+```
+
+调用：
+
+```text
+/english-coach:english-coach
+```
 
 ## Skill 列表
 
 | Skill | 描述 | 使用方式 |
 | --- | --- | --- |
-| [English Coach](./english-coach/SKILL.md) | 中英翻译、英文查词与发音说明。 | 输入 `$english-coach`，然后提供需要翻译或解释的内容，例如：`$english-coach explain "idempotent"`。 |
-| [English Coach Ollama Qwen2.5 7B](./english-coach-ollama-qwen2-5-7b/Modelfile.english-coach) | 基于 `qwen2.5:7b`，通过少样本对话强化中英技术文本翻译。 | 运行 `ollama create english-coach -f english-coach-ollama-qwen2-5-7b/Modelfile.english-coach` 创建模型。 |
+| [English Coach](./plugins/english-coach/) | 中英翻译、英文查词、发音说明与措辞修正。 | 输入 `/english-coach:english-coach explain "idempotent"`。 |

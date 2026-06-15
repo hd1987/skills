@@ -1,53 +1,86 @@
-# Skill Repository Rules
+# Personal Skill Repository Rules
 
 ## Purpose
 
-This repository stores reusable agent skills. Each skill should be
-self-contained, portable, and independent of a specific machine, user, agent
-runtime, or distribution platform unless the skill explicitly targets one.
+This repository stores Adi's personal Agent Skills and distributes them through
+repository-level marketplaces for Codex and Claude Code. Each Skill should be
+self-contained, installable, and independent of a specific machine unless it
+explicitly targets one.
 
 ## Structure
 
-Use a flat directory layout:
+Use this marketplace layout:
 
 ```text
 skills/
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json
+├── .claude-plugin/
+│   └── marketplace.json
 ├── CLAUDE.md
-└── <skill-name>/
-    ├── SKILL.md
-    ├── scripts/
-    ├── references/
-    ├── assets/
-    └── <platform-metadata>/
+├── README.md
+└── plugins/
+    └── <plugin-name>/
+        ├── .codex-plugin/
+        │   └── plugin.json
+        ├── .claude-plugin/
+        │   └── plugin.json
+        ├── skills/
+        │   └── <skill-name>/
+        │       ├── SKILL.md
+        │       ├── scripts/
+        │       ├── references/
+        │       └── assets/
 ```
 
-Each direct child directory represents one skill. Use lowercase hyphen-case
-names matching the `name` field in its `SKILL.md`.
+Each direct child of `plugins/` represents one plugin. Use lowercase hyphen-case
+names matching the `name` fields in both plugin manifests. Marketplace entries
+must use the same name and the source path `./plugins/<plugin-name>`.
 
-## Skill Contents
+Use one plugin per Skill. The plugin name, Skill directory name, and `name`
+field in `SKILL.md` must match.
 
-- `SKILL.md` is required.
-- Add `scripts/`, `references/`, or `assets/` only when required.
-- Add platform-specific metadata only when needed by a supported runtime.
-- Keep platform-specific instructions isolated from the portable core of the
-  skill.
-- Do not add per-skill README, installation guide, changelog, or duplicate
-  repository rules.
+## Plugin Contents
+
+- `.codex-plugin/plugin.json` and `.claude-plugin/plugin.json` are required.
+- Put reusable agent skills under `skills/<skill-name>/`.
+- Each skill requires `SKILL.md`. Add `scripts/`, `references/`, or `assets/`
+  only when required.
+- Keep one shared `SKILL.md` for both platforms. Do not duplicate Skill content
+  into platform-specific directories.
+- Keep platform-specific instructions isolated from portable Skill content.
+- Do not add per-plugin or per-Skill README files, installation guides,
+  changelogs, or duplicate repository rules.
+
+## Marketplace
+
+- Keep the Codex catalog at `.agents/plugins/marketplace.json`.
+- Keep the Claude Code catalog at `.claude-plugin/marketplace.json`.
+- Preserve plugin order because it controls display order.
+- Codex entries must include `policy.installation`,
+  `policy.authentication`, and `category`.
+- Claude Code entries must include `name` and `source`.
+- Add a plugin to the catalog only after its manifest and referenced files are
+  complete.
 
 ## Maintenance
 
-- Keep each skill focused on one reusable capability.
+- Keep each Skill focused on one reusable behavior.
+- Keep each plugin limited to its matching Skill and required metadata.
 - Keep paths, commands, and examples portable. Do not depend on user-specific
   absolute paths.
-- Write skill instructions, metadata, scripts, and code comments in English.
+- Write Skill instructions, metadata, scripts, and code comments in English.
 - Keep generated system files out of source control.
 - Update this file before changing repository structure or conventions.
 
 ## Validation
 
-Validate every modified skill before considering the work complete.
+Validate every modified plugin before considering the work complete.
 
-1. Use the repository's validation command when one exists.
-2. Otherwise, verify the `SKILL.md` frontmatter, required files, referenced
-   paths, and executable scripts with the tools available in the environment.
-3. Record any validation that could not be performed and the reason.
+1. Validate both marketplace files as JSON.
+2. Validate every modified Codex plugin manifest with the Codex validator.
+3. Run `claude plugin validate --strict` on the Claude marketplace and plugins.
+4. Validate each modified Skill's frontmatter, required files, referenced
+   paths, and executable scripts.
+5. Record any validation that could not be performed and the reason.

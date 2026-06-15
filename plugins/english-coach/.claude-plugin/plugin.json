@@ -1,0 +1,17 @@
+{
+  "name": "english-coach",
+  "description": "Chinese-English translation, vocabulary, pronunciation, and wording guidance.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Adi"
+  },
+  "homepage": "https://github.com/hd1987/skills/tree/main/plugins/english-coach",
+  "repository": "https://github.com/hd1987/skills",
+  "license": "MIT",
+  "keywords": [
+    "english",
+    "translation",
+    "vocabulary",
+    "pronunciation"
+  ]
+}
