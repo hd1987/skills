@@ -1,7 +1,7 @@
 {
   "name": "english-coach",
-  "description": "Chinese-English translation, vocabulary, pronunciation, and wording guidance.",
-  "version": "1.0.0",
+  "description": "Chinese-English translation, vocabulary, pronunciation, wording guidance, and English study analysis.",
+  "version": "1.1.0",
   "author": {
     "name": "Adi"
   },
@@ -12,6 +12,7 @@
     "english",
     "translation",
     "vocabulary",
-    "pronunciation"
+    "pronunciation",
+    "learning"
   ]
 }
