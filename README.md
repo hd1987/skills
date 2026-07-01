@@ -6,7 +6,7 @@
 
 | Skill | 功能 |
 | --- | --- |
-| [English Coach](./plugins/english-coach/) | 中英翻译、英文查词、发音说明与措辞修正 |
+| [English Coach](./plugins/english-coach/) | 中英翻译、英文查词、发音说明、措辞修正与文本/文档英语学习分析 |
 
 ## 安装
 
