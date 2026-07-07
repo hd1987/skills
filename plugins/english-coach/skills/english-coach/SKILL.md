@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: Use for Chinese-English translation, English vocabulary explanations, pronunciation guidance, wording correction, or English learning analysis from pasted text and document files such as .docx meeting notes. Produce Chinese teaching content covering grammar, vocabulary, natural expressions, and practice when the user provides study material.
+description: Use for Chinese-English translation, English vocabulary explanations, pronunciation guidance, wording correction, or English learning analysis from pasted text and document files such as .docx meeting notes. Produce Chinese teaching content from selected original excerpts, covering grammar, vocabulary, natural expressions, and practice when the user provides study material.
 ---
 
 # English Coach
@@ -38,16 +38,32 @@ workplace, meeting, product, or software-development language.
 Use this default teaching structure unless the user asks for another format:
 
 1. **Core Meaning**: Summarize the material in concise Chinese.
-2. **Grammar Focus**: Explain 3-5 useful sentence patterns or grammar points.
-   Quote only short excerpts and explain how the structure works.
-3. **Vocabulary And Phrases**: Explain important words, collocations, phrasal
-   verbs, idioms, and workplace expressions with Chinese meanings.
-4. **Natural Expressions**: Extract reusable English phrases and show when to
-   use them.
-5. **Mistakes To Avoid**: Point out likely misunderstandings, false friends, or
-   unnatural Chinese-to-English transfers.
-6. **Practice**: Provide 3-5 short exercises based on the material, such as
-   rewriting, sentence building, or Chinese-to-English translation.
+2. **Reading Map**: List 8-15 short, high-value original excerpts with one-line
+   Chinese notes explaining why each excerpt is worth reading. For short source
+   material, list fewer excerpts and keep only what is genuinely useful.
+3. **Excerpt Deep Dives**: Select 4-8 excerpts from the Reading Map for detailed
+   teaching. For each selected excerpt, keep the explanation together under the
+   original text:
+   - Original excerpt: Quote 1-3 useful source sentences, lightly cleaning only
+     obvious transcription noise when needed.
+   - Chinese understanding: Explain the meaning in natural Chinese.
+   - Grammar: Explain useful sentence patterns or structure.
+   - Vocabulary and phrases: Explain important words, collocations, phrasal
+     verbs, idioms, and workplace expressions.
+   - Natural expression: Show the polished version a fluent speaker would use
+     when the transcript wording is awkward.
+   - Mistakes to avoid: Point out likely misunderstandings, false friends, or
+     unnatural Chinese-to-English transfers.
+4. **Practice**: Provide 3-5 short exercises based on the selected excerpts,
+   such as rewriting, sentence building, or Chinese-to-English translation.
+
+Do not split grammar, vocabulary, natural expressions, and mistakes into
+separate global sections for long study material. Keep them attached to the
+original excerpt so the lesson reads continuously.
+
+For very long documents, split the lesson by topic, speaker, or time window
+instead of expanding one answer indefinitely. Do not deep-dive every excerpt
+unless the user explicitly asks for exhaustive analysis.
 
 Keep the explanation practical. Prefer fewer, clearer teaching points over a
 large glossary.
