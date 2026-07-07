@@ -54,12 +54,17 @@ Use this default teaching structure unless the user asks for another format:
      when the transcript wording is awkward.
    - Mistakes to avoid: Point out likely misunderstandings, false friends, or
      unnatural Chinese-to-English transfers.
-4. **Practice**: Provide 3-5 short exercises based on the selected excerpts,
+4. **Vocabulary Bank**: Add 8-15 useful words or phrases from the whole
+   material that were not already covered in the deep dives. Keep each item
+   brief: English item, Chinese meaning, and one natural usage note or
+   collocation.
+5. **Practice**: Provide 3-5 short exercises based on the selected excerpts,
    such as rewriting, sentence building, or Chinese-to-English translation.
 
 Do not split grammar, vocabulary, natural expressions, and mistakes into
 separate global sections for long study material. Keep them attached to the
-original excerpt so the lesson reads continuously.
+original excerpt so the lesson reads continuously. Use the Vocabulary Bank only
+for additional useful items, not as a duplicate glossary of the deep dives.
 
 For very long documents, split the lesson by topic, speaker, or time window
 instead of expanding one answer indefinitely. Do not deep-dive every excerpt
