@@ -1,0 +1,18 @@
+{
+  "name": "my-workflow",
+  "description": "Personal work workflows dispatched by name, such as processing PR code review comments.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Adi"
+  },
+  "homepage": "https://github.com/hd1987/skills/tree/main/plugins/my-workflow",
+  "repository": "https://github.com/hd1987/skills",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "pull-request",
+    "code-review",
+    "copilot",
+    "git"
+  ]
+}

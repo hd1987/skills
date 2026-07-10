@@ -1,0 +1,38 @@
+{
+  "name": "my-workflow",
+  "version": "0.1.0",
+  "description": "Personal work workflows dispatched by name, such as processing PR code review comments.",
+  "author": {
+    "name": "Adi",
+    "url": "https://github.com/hd1987"
+  },
+  "homepage": "https://github.com/hd1987/skills/tree/main/plugins/my-workflow",
+  "repository": "https://github.com/hd1987/skills",
+  "keywords": [
+    "workflow",
+    "pull-request",
+    "code-review",
+    "copilot",
+    "git"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "My Workflow",
+    "shortDescription": "Run a named personal work workflow.",
+    "longDescription": "Dispatches personal work workflows by name. The first argument selects the workflow, for example `copilot review` (alias `cr`) to triage, fix, and resolve pull request code review comments.",
+    "developerName": "Adi",
+    "category": "Productivity",
+    "capabilities": [
+      "Code review",
+      "Pull requests",
+      "Git",
+      "Automation"
+    ],
+    "websiteURL": "https://github.com/hd1987/skills",
+    "defaultPrompt": [
+      "copilot review",
+      "cr"
+    ],
+    "brandColor": "#2563EB"
+  }
+}
