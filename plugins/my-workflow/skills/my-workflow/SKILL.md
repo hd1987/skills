@@ -13,12 +13,16 @@ under `references/`. Load only the matched file and execute it exactly.
 
 ## Route Workflows
 
-Read the argument, lowercase it, and match against the table below. Matching is
-case-insensitive and ignores surrounding whitespace.
+Read the argument, lowercase it, and match its leading keyword against the table
+below. Matching is case-insensitive and ignores surrounding whitespace. Any
+tokens after the matched keyword are parameters passed to the workflow.
 
-| Argument (aliases) | Workflow file |
-| --- | --- |
-| `copilot review`, `cr` | `references/copilot-review.md` |
+| Leading keyword (aliases) | Parameters | Workflow file |
+| --- | --- | --- |
+| `copilot review`, `cr` | none | `references/copilot-review.md` |
+| `commit` | none | `references/commit.md` |
+| `push` | none | `references/push.md` |
+| `pr` | `<source> to <target>` | `references/pr.md` |
 
 Steps:
 

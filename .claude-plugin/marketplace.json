@@ -19,7 +19,7 @@
       "name": "my-workflow",
       "source": "./plugins/my-workflow",
       "description": "Personal work workflows dispatched by name, such as processing PR code review comments.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": {
         "name": "Adi"
       },
