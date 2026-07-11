@@ -7,7 +7,7 @@
 | Skill | 功能 |
 | --- | --- |
 | [English Coach](./plugins/english-coach/) | 中英翻译、英文查词、发音说明、措辞修正与文本/文档英语学习分析 |
-| [My Workflow](./plugins/my-workflow/) | 按名称分发个人工作流：Copilot review 分流、团队风格 commit、push 建 PR、指定分支建 PR |
+| [My Workflow](./plugins/my-workflow/) | 按名称分发个人工作流：PR review 分流、团队风格 commit、push 建 PR、pr create 建 PR（默认或指定分支） |
 
 ## 安装
 
@@ -29,10 +29,11 @@ claude plugin install my-workflow@adi-skills
 
 ```text
 /english-coach:english-coach
-/my-workflow cr                 # Copilot review 分流
-/my-workflow commit             # 团队风格本地 commit
-/my-workflow push               # 当前分支 → develop，push + 建 PR + Google Chat
-/my-workflow pr develop to qa   # 指定分支建 PR
+/my-workflow pr review              # Copilot review 分流
+/my-workflow commit                 # 团队风格本地 commit
+/my-workflow push                   # 当前分支 → develop，push + 建 PR + Google Chat
+/my-workflow pr create              # 建 PR（默认 当前 → develop）+ Google Chat
+/my-workflow pr create develop to qa # 建 PR（指定分支）+ Google Chat
 ```
 
 ## 本地 Ollama

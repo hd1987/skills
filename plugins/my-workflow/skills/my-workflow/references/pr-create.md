@@ -1,19 +1,25 @@
-# Workflow: pr <source> to <target>
+# Workflow: pr create [<source> to <target>]
 
-Open a pull request between two existing branches, using the team's title style,
-then output a Google Chat announcement. Both branches are expected to already
-exist on `origin`; this workflow does not commit or push code.
+Open a pull request between two branches that already exist on `origin`, using
+the team's title style, then output a Google Chat announcement. This workflow
+does not commit or push code.
 
-## Step 0 — Parse Branches
+## Step 0 — Resolve Branches
 
-The parameters have the form `<source> to <target>`, for example
-`pr develop to qa` means head `develop`, base `qa`.
+Read the optional parameters.
 
-- `source` (head): the branch whose changes are merged.
-- `target` (base): the branch that receives the changes.
+- No parameters: default to `source` = the current branch, `target` = `develop`.
+- `<source> to <target>` (for example `develop to qa`): use the given branches,
+  `source` as head, `target` as base.
 
-If the parameters are missing or do not contain `to`, state the expected form
-`pr <source> to <target>` and stop. Do not guess branches.
+If parameters are present but do not contain `to`, state the expected form
+`pr create <source> to <target>` and stop. Do not guess branches.
+
+Resolve the current branch when defaulting:
+
+```bash
+git rev-parse --abbrev-ref HEAD
+```
 
 Verify both branches exist on `origin`:
 
@@ -21,7 +27,10 @@ Verify both branches exist on `origin`:
 git ls-remote --heads origin SOURCE TARGET
 ```
 
-If either is missing, report which one and stop.
+If `source` is the current branch and is not yet on `origin`, it has unpushed
+work: stop and tell the user to run `/my-workflow push` first (that workflow
+pushes and opens the PR). If any other branch is missing, report which one and
+stop.
 
 ## Step 1 — Learn The Team Title Style (never skip)
 

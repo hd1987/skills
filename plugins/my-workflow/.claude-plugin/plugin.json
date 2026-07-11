@@ -1,7 +1,7 @@
 {
   "name": "my-workflow",
   "description": "Personal work workflows dispatched by name, such as processing PR code review comments.",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "author": {
     "name": "Adi"
   },
