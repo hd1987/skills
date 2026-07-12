@@ -1,6 +1,6 @@
 ---
 name: my-workflow
-description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/my-workflow <name>`, for example `/my-workflow pr review` to triage, fix, commit, and resolve pull request code review comments, or `/my-workflow pr create` to open a pull request.
+description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/my-workflow <name>`, for example `/my-workflow copilot review` to triage, fix, commit, and resolve Copilot pull request review comments, or `/my-workflow pr create` to open a pull request.
 ---
 
 # My Workflow
@@ -19,7 +19,7 @@ tokens after the matched keyword are parameters passed to the workflow.
 
 | Leading keyword (aliases) | Parameters | Workflow file |
 | --- | --- | --- |
-| `pr review` | none | `references/copilot-review.md` |
+| `copilot review` | none | `references/copilot-review.md` |
 | `commit` | none | `references/commit.md` |
 | `push` | none | `references/push.md` |
 | `pr create` | optional `<source> to <target>` | `references/pr-create.md` |

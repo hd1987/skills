@@ -1,4 +1,4 @@
-# Workflow: pr review
+# Workflow: copilot review
 
 Process the latest code review comments on the current pull request in one pass:
 triage each comment, apply the safe ones, and resolve their threads silently.
@@ -99,7 +99,7 @@ those threads as in Step 3.
 
 Run only this single pass. Copilot re-reviews asynchronously after a push and
 posts a new batch of comments. When it does, the user re-invokes
-`/my-workflow pr review` to process the next round. Do not poll or wait for Copilot.
+`/my-workflow copilot review` to process the next round. Do not poll or wait for Copilot.
 
 ## Output Shape
 
