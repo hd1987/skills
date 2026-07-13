@@ -30,7 +30,7 @@ Constraints:
 - Write the message in the team's style, not a generic convention.
 - Do NOT add "Generated with Claude Code", co-author trailers, or any tool
   attribution.
-- Do NOT push. Pushing belongs to `/my-workflow push`.
+- Do NOT push. Pushing belongs to `/ifm push`.
 
 ## Output
 

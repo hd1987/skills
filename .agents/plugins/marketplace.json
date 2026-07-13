@@ -17,10 +17,10 @@
       "category": "Education"
     },
     {
-      "name": "my-workflow",
+      "name": "ifm",
       "source": {
         "source": "local",
-        "path": "./plugins/my-workflow"
+        "path": "./plugins/ifm"
       },
       "policy": {
         "installation": "AVAILABLE",

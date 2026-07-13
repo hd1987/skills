@@ -56,6 +56,6 @@ known, set `*Ticket:* N/A`. Keep the summary to one line.
 
 ## Notes
 
-- This workflow pushes without a separate confirmation; running `/my-workflow push`
+- This workflow pushes without a separate confirmation; running `/ifm push`
   is the authorization.
-- Run `/my-workflow commit` first if there are uncommitted changes.
+- Run `/ifm commit` first if there are uncommitted changes.

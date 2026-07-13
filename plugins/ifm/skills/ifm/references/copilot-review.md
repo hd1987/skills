@@ -99,7 +99,7 @@ those threads as in Step 3.
 
 Run only this single pass. Copilot re-reviews asynchronously after a push and
 posts a new batch of comments. When it does, the user re-invokes
-`/my-workflow copilot review` to process the next round. Do not poll or wait for Copilot.
+`/ifm copilot review` to process the next round. Do not poll or wait for Copilot.
 
 ## Output Shape
 

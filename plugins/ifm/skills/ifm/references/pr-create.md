@@ -28,7 +28,7 @@ git ls-remote --heads origin SOURCE TARGET
 ```
 
 If `source` is the current branch and is not yet on `origin`, it has unpushed
-work: stop and tell the user to run `/my-workflow push` first (that workflow
+work: stop and tell the user to run `/ifm push` first (that workflow
 pushes and opens the PR). If any other branch is missing, report which one and
 stop.
 

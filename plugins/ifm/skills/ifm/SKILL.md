@@ -1,9 +1,9 @@
 ---
-name: my-workflow
-description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/my-workflow <name>`, for example `/my-workflow copilot review` to triage, fix, commit, and resolve Copilot pull request review comments, or `/my-workflow pr create` to open a pull request.
+name: ifm
+description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm copilot review` to triage, fix, commit, and resolve Copilot pull request review comments, or `/ifm pr create` to open a pull request.
 ---
 
-# My Workflow
+# IFM
 
 ## Purpose
 
