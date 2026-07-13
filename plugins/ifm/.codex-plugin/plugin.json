@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "IFM",
     "shortDescription": "Run a named personal work workflow.",
-    "longDescription": "Dispatches personal work workflows by name. The first argument selects the workflow, for example `pr review` to triage, fix, and resolve pull request code review comments, or `pr create` to open a pull request.",
+    "longDescription": "Dispatches personal work workflows by name. The first argument selects the workflow, for example `review` to triage, fix, and resolve pull request code review comments, or `create` to open a pull request.",
     "developerName": "Adi",
     "category": "Productivity",
     "capabilities": [
@@ -30,8 +30,9 @@
     ],
     "websiteURL": "https://github.com/hd1987/skills",
     "defaultPrompt": [
-      "pr review",
-      "pr create"
+      "review",
+      "create",
+      "create pr develop to qa"
     ],
     "brandColor": "#2563EB"
   }

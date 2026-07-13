@@ -1,4 +1,4 @@
-# Workflow: pr create [<source> to <target>]
+# Workflow: create [pr [<source> to <target>]]
 
 Open a pull request between two branches that already exist on `origin`, using
 the team's title style, then output a Google Chat announcement. This workflow
@@ -6,14 +6,24 @@ does not commit or push code.
 
 ## Step 0 — Resolve Branches
 
-Read the optional parameters.
+Read and normalize the optional parameters.
 
-- No parameters: default to `source` = the current branch, `target` = `develop`.
-- `<source> to <target>` (for example `develop to qa`): use the given branches,
-  `source` as head, `target` as base.
+- No parameters (`/ifm create`): default to `source` = the current branch and
+  `target` = `develop`.
+- `pr` only (`/ifm create pr`): use the same defaults.
+- `pr <source> to <target>`: use the given branches, with `source` as head and
+  `target` as base. For example, `/ifm create pr develop to qa` means
+  `source` = `develop` and `target` = `qa`.
 
-If parameters are present but do not contain `to`, state the expected form
-`pr create <source> to <target>` and stop. Do not guess branches.
+For any other parameter shape, state the accepted forms and stop:
+
+```text
+/ifm create
+/ifm create pr
+/ifm create pr <source> to <target>
+```
+
+Do not guess branches.
 
 Resolve the current branch when defaulting:
 
@@ -60,7 +70,8 @@ syntax, NOT markdown italic. Print the whole block inside a fenced code block so
 the terminal shows the asterisks literally instead of rendering them as italic.
 Use plain URLs, never markdown links.
 
-Template (fill each field; use the literal asterisks):
+For every branch combination except `develop` to `qa`, fill each field in this
+template and use the literal asterisks:
 
 ````
 ```
@@ -73,3 +84,14 @@ Template (fill each field; use the literal asterisks):
 
 Derive `REPO_NAME` from `gh repo view --json name -q .name`. If no ticket is
 known, set `*Ticket:* N/A`. Keep the summary to one line.
+
+When `source` is exactly `develop` and `target` is exactly `qa`, use this
+template instead. Keep the summary exactly as shown and omit the Ticket field:
+
+````
+```
+*Repo:* REPO_NAME
+*PR:* PR_URL
+*Summary:* Sync Dev to QA
+```
+````

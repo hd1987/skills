@@ -1,6 +1,6 @@
 ---
 name: ifm
-description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm review` to triage, fix, commit, push, and resolve pull request review comments, or `/ifm pr create` to open a pull request.
+description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm review` to triage, fix, commit, push, and resolve pull request review comments, or `/ifm create` and `/ifm create pr develop to qa` to open a pull request.
 ---
 
 # IFM
@@ -22,7 +22,7 @@ tokens after the matched keyword are parameters passed to the workflow.
 | `review` | none | `references/review.md` |
 | `commit` | none | `references/commit.md` |
 | `push` | none | `references/push.md` |
-| `pr create` | optional `<source> to <target>` | `references/pr-create.md` |
+| `create` | optional `pr [<source> to <target>]` | `references/create-pr.md` |
 
 Steps:
 
@@ -37,6 +37,7 @@ Steps:
 
 - Every workflow runs a single pass. To process a later review round, the user
   re-invokes the command. Never poll or wait for another round.
-- Respect the global red lines. Invoking `/ifm review` authorizes only the
-  narrowly scoped push defined in `references/review.md`; every other push and
-  all destructive or sensitive actions still require explicit confirmation.
+- Respect the global red lines. Invoking `/ifm review` or `/ifm push` authorizes
+  only the narrowly scoped standard push defined in the matched workflow file;
+  every other push and all destructive or sensitive actions still require
+  explicit confirmation.

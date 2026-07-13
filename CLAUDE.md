@@ -85,9 +85,11 @@ alternative local usage assets and are not part of any Skill or plugin.
 - Invoking `/ifm review` explicitly authorizes that invocation to push only the
   review-fix commit it creates to the current pull request branch after project
   validation succeeds.
-- This authorization permits only a standard push. Never force-push, push
-  unrelated or pre-existing commits, or push when the branch or pull request is
-  uncertain.
+- Invoking `/ifm push` explicitly authorizes that invocation to push the
+  inspected commits on the current branch as defined in
+  `plugins/ifm/skills/ifm/references/push.md`.
+- Both authorizations permit only a standard push. Never force-push, push
+  unrelated commits, or push when the branch or pull request is uncertain.
 - Every other `git push` requires separate explicit confirmation.
 
 ## Validation
