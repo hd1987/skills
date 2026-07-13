@@ -7,7 +7,7 @@
 | Skill | 功能 |
 | --- | --- |
 | [English Coach](./plugins/english-coach/) | 中英翻译、英文查词、发音说明、措辞修正与文本/文档英语学习分析 |
-| [IFM](./plugins/ifm/) | 按名称分发个人工作流：Copilot review 分流、团队风格 commit、push 建 PR、pr create 建 PR（默认或指定分支） |
+| [IFM](./plugins/ifm/) | 按名称分发个人工作流：PR review 处理、团队风格 commit、push 建 PR、pr create 建 PR（默认或指定分支） |
 
 ## 安装
 
@@ -29,7 +29,7 @@ claude plugin install ifm@adi-skills
 
 ```text
 /english-coach:english-coach
-/ifm copilot review         # Copilot review 分流
+/ifm review                 # PR review 处理
 /ifm commit                 # 团队风格本地 commit
 /ifm push                   # 当前分支 → develop，push + 建 PR + Google Chat
 /ifm pr create              # 建 PR（默认 当前 → develop）+ Google Chat

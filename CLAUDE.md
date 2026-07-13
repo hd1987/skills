@@ -80,6 +80,16 @@ alternative local usage assets and are not part of any Skill or plugin.
 - Keep generated system files out of source control.
 - Update this file before changing repository structure or conventions.
 
+## Workflow Authorization
+
+- Invoking `/ifm review` explicitly authorizes that invocation to push only the
+  review-fix commit it creates to the current pull request branch after project
+  validation succeeds.
+- This authorization permits only a standard push. Never force-push, push
+  unrelated or pre-existing commits, or push when the branch or pull request is
+  uncertain.
+- Every other `git push` requires separate explicit confirmation.
+
 ## Validation
 
 Validate every modified plugin before considering the work complete.

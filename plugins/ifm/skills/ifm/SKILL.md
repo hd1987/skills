@@ -1,6 +1,6 @@
 ---
 name: ifm
-description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm copilot review` to triage, fix, commit, and resolve Copilot pull request review comments, or `/ifm pr create` to open a pull request.
+description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm review` to triage, fix, commit, push, and resolve pull request review comments, or `/ifm pr create` to open a pull request.
 ---
 
 # IFM
@@ -19,7 +19,7 @@ tokens after the matched keyword are parameters passed to the workflow.
 
 | Leading keyword (aliases) | Parameters | Workflow file |
 | --- | --- | --- |
-| `copilot review` | none | `references/copilot-review.md` |
+| `review` | none | `references/review.md` |
 | `commit` | none | `references/commit.md` |
 | `push` | none | `references/push.md` |
 | `pr create` | optional `<source> to <target>` | `references/pr-create.md` |
@@ -35,7 +35,8 @@ Steps:
 
 ## Conventions
 
-- Every workflow runs a single pass. To advance multiple rounds, the user
-  re-invokes the command; a re-invocation is the only loop trigger.
-- Respect the global red lines. Never `git push`, delete history, or touch
-  secrets and CI config without explicit confirmation, even inside a workflow.
+- Every workflow runs a single pass. To process a later review round, the user
+  re-invokes the command. Never poll or wait for another round.
+- Respect the global red lines. Invoking `/ifm review` authorizes only the
+  narrowly scoped push defined in `references/review.md`; every other push and
+  all destructive or sensitive actions still require explicit confirmation.
