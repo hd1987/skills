@@ -1,6 +1,6 @@
 ---
 name: ifm
-description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm review` to triage, fix, commit, push, and resolve pull request review comments, or `/ifm create` and `/ifm create pr develop to qa` to open a pull request.
+description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm root cause [ticket]` to identify a related Jira ticket, set its Root Cause field, and add a concise comment; `/ifm review` to process pull request review comments; or `/ifm create pr [source to target]` to open a pull request.
 ---
 
 # IFM
@@ -19,10 +19,11 @@ tokens after the matched keyword are parameters passed to the workflow.
 
 | Leading keyword (aliases) | Parameters | Workflow file |
 | --- | --- | --- |
+| `root cause` | optional `[<ticket>]` | `references/root-cause.md` |
 | `review` | none | `references/review.md` |
 | `commit` | none | `references/commit.md` |
 | `push` | none | `references/push.md` |
-| `create` | optional `pr [<source> to <target>]` | `references/create-pr.md` |
+| `create pr` | optional `[<source> to <target>]` | `references/create-pr.md` |
 
 Steps:
 
@@ -41,3 +42,6 @@ Steps:
   only the narrowly scoped standard push defined in the matched workflow file;
   every other push and all destructive or sensitive actions still require
   explicit confirmation.
+- Invoking `/ifm root cause` authorizes only the Jira field update and comment
+  defined in that workflow. Complete it without asking the user to choose a
+  ticket, field value, or wording.

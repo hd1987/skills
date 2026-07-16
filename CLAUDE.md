@@ -82,14 +82,19 @@ alternative local usage assets and are not part of any Skill or plugin.
 
 ## Workflow Authorization
 
+- Invoking `/ifm root cause` explicitly authorizes that invocation to update
+  only the `Root Cause (migrated)` field and add one concise comment on the
+  single Jira ticket selected by the workflow.
 - Invoking `/ifm review` explicitly authorizes that invocation to push only the
   review-fix commit it creates to the current pull request branch after project
   validation succeeds.
 - Invoking `/ifm push` explicitly authorizes that invocation to push the
   inspected commits on the current branch as defined in
   `plugins/ifm/skills/ifm/references/push.md`.
-- Both authorizations permit only a standard push. Never force-push, push
+- Both push authorizations permit only a standard push. Never force-push, push
   unrelated commits, or push when the branch or pull request is uncertain.
+- The root-cause authorization does not permit transitions, assignments, edits
+  to other fields, or writes to any other Jira ticket.
 - Every other `git push` requires separate explicit confirmation.
 
 ## Validation

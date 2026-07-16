@@ -1,4 +1,4 @@
-# Workflow: create [pr [<source> to <target>]]
+# Workflow: create pr [<source> to <target>]
 
 Open a pull request between two branches that already exist on `origin`, using
 the team's title style, then output a Google Chat announcement. This workflow
@@ -8,17 +8,15 @@ does not commit or push code.
 
 Read and normalize the optional parameters.
 
-- No parameters (`/ifm create`): default to `source` = the current branch and
-  `target` = `develop`.
-- `pr` only (`/ifm create pr`): use the same defaults.
-- `pr <source> to <target>`: use the given branches, with `source` as head and
+- No parameters after `create pr` (`/ifm create pr`): default to `source` = the
+  current branch and `target` = `develop`.
+- `<source> to <target>`: use the given branches, with `source` as head and
   `target` as base. For example, `/ifm create pr develop to qa` means
   `source` = `develop` and `target` = `qa`.
 
 For any other parameter shape, state the accepted forms and stop:
 
 ```text
-/ifm create
 /ifm create pr
 /ifm create pr <source> to <target>
 ```
