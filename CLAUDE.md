@@ -87,12 +87,15 @@ alternative local usage assets and are not part of any Skill or plugin.
   single Jira ticket selected by the workflow.
 - Invoking `/ifm review` explicitly authorizes that invocation to push only the
   review-fix commit it creates to the current pull request branch after project
-  validation succeeds.
+  validation succeeds, resolve the applied review threads, and request one
+  Copilot review on that pull request after the workflow completes successfully.
 - Invoking `/ifm push` explicitly authorizes that invocation to push the
   inspected commits on the current branch as defined in
   `plugins/ifm/skills/ifm/references/push.md`.
 - Both push authorizations permit only a standard push. Never force-push, push
   unrelated commits, or push when the branch or pull request is uncertain.
+- The review authorization does not permit requesting other reviewers, posting
+  comments or reviews, or waiting for and processing the new Copilot review.
 - The root-cause authorization does not permit transitions, assignments, edits
   to other fields, or writes to any other Jira ticket.
 - Every other `git push` requires separate explicit confirmation.

@@ -18,8 +18,8 @@
     {
       "name": "ifm",
       "source": "./plugins/ifm",
-      "description": "Personal work workflows dispatched by name, including Jira root-cause updates and pull request operations.",
-      "version": "0.6.0",
+      "description": "Personal work workflows dispatched by name, including Jira root-cause updates and Copilot review cycles.",
+      "version": "0.7.0",
       "author": {
         "name": "Adi"
       },

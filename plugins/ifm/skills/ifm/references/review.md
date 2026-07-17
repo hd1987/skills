@@ -2,19 +2,22 @@
 
 Process the latest unresolved code review comments on the pull request for the
 current branch in one pass. Evaluate every comment, apply reasonable and safe
-changes, and resolve only the threads whose fixes were pushed successfully.
+changes, resolve only the threads whose fixes were pushed successfully, then
+request a Copilot review when the pass completes without risky comments.
 
 ## Scope And Authorization
 
 - Operate only on the pull request for the current branch.
 - Invoking `/ifm review` authorizes a standard push of only the review-fix
-  commit created during this invocation to the current pull request branch.
+  commit created during this invocation to the current pull request branch and
+  one Copilot review request on that pull request after successful processing.
 - Never force-push or push unrelated or pre-existing commits.
 - Do not post replies, comments, reviews, or any other text on GitHub. The only
-  permitted GitHub writes are the authorized push and resolving applied review
-  threads.
-- Run one pass only. Do not poll, wait for another review round, or trigger
-  another pass automatically. The user will invoke `/ifm review` again.
+  permitted GitHub writes are the authorized push, resolving applied review
+  threads, and requesting Copilot as a reviewer.
+- Run one processing pass only. After requesting Copilot review, do not poll,
+  wait for its result, or process the new round automatically. The user will
+  invoke `/ifm review` again.
 
 ## Step 1 — Verify The Working State
 
@@ -62,8 +65,8 @@ query($owner:String!,$repo:String!,$pr:Int!){
 }' -F owner=OWNER -F repo=REPO -F pr=PR
 ```
 
-Keep only threads where `isResolved` is `false`. If none remain, output
-`Passed` and stop.
+Keep only threads where `isResolved` is `false`. If none remain, skip Steps 3
+and 4 and continue to Step 5.
 
 ## Step 3 — Evaluate Every Comment
 
@@ -104,7 +107,33 @@ Verify that every mutation returns `isResolved: true`. If the commit or push
 fails, do not resolve any applied thread. If resolving a thread fails, leave it
 open and report `Failed` with its location.
 
-## Step 5 — Report Only What Needs Attention
+## Step 5 — Request Copilot Review
+
+Run this step only when no risky comments remain and every required validation,
+commit, push, and thread resolution from the current pass succeeded. If any
+risky comment or earlier failure remains, skip the Copilot request and continue
+to Step 6.
+
+1. Read the pull request's current `headRefOid`, `reviewRequests`, and reviews:
+
+```bash
+gh pr view PR --json headRefOid,reviewRequests,reviews
+```
+
+2. If Copilot already has a pending review request, or its latest review is for
+   the current `headRefOid`, do not request a duplicate; continue to Step 6.
+3. Otherwise, request one Copilot review:
+
+```bash
+gh pr edit PR --add-reviewer "@copilot"
+```
+
+4. Fetch `reviewRequests` again and verify that Copilot is present. If the
+   request or verification fails, output `Failed` with the specific reason and
+   stop. Do not retry with another reviewer identifier.
+5. Do not wait for Copilot to finish and do not start another processing pass.
+
+## Step 6 — Report Only What Needs Attention
 
 - If all open comments were safe and processed successfully, output only
   `Passed`.
@@ -115,6 +144,6 @@ open and report `Failed` with its location.
   - Comment: a concise summary.
   - Rationale: the technical reason it requires confirmation.
 - If safe and risky comments are mixed, process the safe comments completely,
-  then report only the risky comments.
+  skip the Copilot review request, then report only the risky comments.
 - Do not emit progress narration, a triage summary, applied-comment details, a
   push prompt, or any unnecessary conversational text.

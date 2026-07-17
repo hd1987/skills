@@ -1,6 +1,6 @@
 ---
 name: ifm
-description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm root cause [ticket]` to identify a related Jira ticket, set its Root Cause field, and add a concise comment; `/ifm review` to process pull request review comments; or `/ifm create pr [source to target]` to open a pull request.
+description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm root cause [ticket]` to identify a related Jira ticket, set its Root Cause field, and add a concise comment; `/ifm review` to process pull request review comments and request the next Copilot review; or `/ifm create pr [source to target]` to open a pull request.
 ---
 
 # IFM

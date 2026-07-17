@@ -34,7 +34,7 @@ claude plugin install ifm@adi-skills
 # IFM
 /ifm commit                 # 团队风格本地 commit
 /ifm push                   # 当前分支 → develop，push + 建 PR + Google Chat
-/ifm review                 # PR review 处理
+/ifm review                 # PR review 处理完成后请求 Copilot review
 /ifm root cause [ticket]    # 定位 Jira ticket，填写 Root Cause 并添加简短评论
 /ifm create pr [source to target] # 建 PR；默认当前 → develop，develop → qa 时固定 Summary、不输出 Ticket
 ```
