@@ -1,6 +1,6 @@
 {
   "name": "ifm",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Personal work workflows dispatched by name, including Jira root-cause updates and Copilot review cycles.",
   "author": {
     "name": "Adi",

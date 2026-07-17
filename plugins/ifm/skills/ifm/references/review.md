@@ -122,16 +122,38 @@ gh pr view PR --json headRefOid,reviewRequests,reviews
 
 2. If Copilot already has a pending review request, or its latest review is for
    the current `headRefOid`, do not request a duplicate; continue to Step 6.
-3. Otherwise, request one Copilot review:
+3. Otherwise, read the pull request node ID:
 
 ```bash
-gh pr edit PR --add-reviewer "@copilot"
+gh pr view PR --json id -q .id
 ```
 
-4. Fetch `reviewRequests` again and verify that Copilot is present. If the
+4. Store the result as `PR_ID`, then request one Copilot review with the
+   login-based GraphQL mutation. Use `union: true` so existing review requests
+   remain unchanged:
+
+```bash
+gh api graphql -f query='
+mutation($pullRequestId:ID!,$botLogins:[String!]!,$union:Boolean!){
+  requestReviewsByLogin(input:{
+    pullRequestId:$pullRequestId
+    botLogins:$botLogins
+    union:$union
+  }){
+    clientMutationId
+  }
+}' -F pullRequestId=PR_ID \
+   -f 'botLogins[]=copilot-pull-request-reviewer[bot]' \
+   -F union=true
+```
+
+Do not use `gh pr edit --add-reviewer`; it may fetch deprecated Projects
+Classic data before requesting the review and fail without adding Copilot.
+
+5. Fetch `reviewRequests` again and verify that Copilot is present. If the
    request or verification fails, output `Failed` with the specific reason and
    stop. Do not retry with another reviewer identifier.
-5. Do not wait for Copilot to finish and do not start another processing pass.
+6. Do not wait for Copilot to finish and do not start another processing pass.
 
 ## Step 6 — Report Only What Needs Attention
 
