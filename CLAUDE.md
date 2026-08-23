@@ -20,8 +20,6 @@ skills/
 │   └── marketplace.json
 ├── CLAUDE.md
 ├── README.md
-├── ollama/
-│   └── Modelfile.<model-name>
 └── plugins/
     └── <plugin-name>/
         ├── .codex-plugin/
@@ -43,9 +41,6 @@ must use the same name and the source path `./plugins/<plugin-name>`.
 Use one plugin per Skill. The plugin name, Skill directory name, and `name`
 field in `SKILL.md` must match.
 
-Store standalone local Ollama model definitions under `ollama/`. They are
-alternative local usage assets and are not part of any Skill or plugin.
-
 ## Plugin Contents
 
 - `.codex-plugin/plugin.json` and `.claude-plugin/plugin.json` are required.
@@ -54,7 +49,6 @@ alternative local usage assets and are not part of any Skill or plugin.
   only when required.
 - Keep one shared `SKILL.md` for both platforms. Do not duplicate Skill content
   into platform-specific directories.
-- Do not place standalone Ollama Modelfiles inside plugin or Skill directories.
 - Keep platform-specific instructions isolated from portable Skill content.
 - Do not add per-plugin or per-Skill README files, installation guides,
   changelogs, or duplicate repository rules.

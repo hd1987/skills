@@ -44,17 +44,3 @@ claude plugin install steelman@adi-skills
 /ifm root cause [ticket]    # 定位 Jira ticket，填写 Root Cause 并添加简短评论
 /ifm create pr [source to target] # 建 PR；默认当前 → develop，develop → qa 时固定 Summary、不输出 Ticket
 ```
-
-## 本地 Ollama
-
-本地模型使用独立的 [Modelfile](./ollama/Modelfile.english-coach)，不属于
-Codex 或 Claude Code Skill。跨机器使用前，将其中的 `FROM` 改为可用的基础模型：
-
-```text
-FROM qwen2.5:7b
-```
-
-```bash
-ollama create english-coach -f ollama/Modelfile.english-coach
-ollama run english-coach
-```
