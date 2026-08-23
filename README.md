@@ -8,6 +8,7 @@
 | --- | --- |
 | [English Coach](./plugins/english-coach/) | 中英翻译、英文查词、发音说明、措辞修正与文本/文档英语学习分析 |
 | [IFM](./plugins/ifm/) | 按名称分发个人工作流：填写 Jira root cause、PR review 处理、团队风格 commit、push/create pr 建 PR |
+| [Steelman](./plugins/steelman/) | 对决策或观点进行双向钢人论证，在回答一个关键问题后给出明确判断与下一步行动 |
 
 ## 安装
 
@@ -16,6 +17,7 @@
 codex plugin marketplace add hd1987/skills
 codex plugin add english-coach@adi-skills
 codex plugin add ifm@adi-skills
+codex plugin add steelman@adi-skills
 ```
 
 ### Claude Code
@@ -23,6 +25,7 @@ codex plugin add ifm@adi-skills
 claude plugin marketplace add hd1987/skills
 claude plugin install english-coach@adi-skills
 claude plugin install ifm@adi-skills
+claude plugin install steelman@adi-skills
 ```
 
 安装后通过以下命令调用：
@@ -30,6 +33,9 @@ claude plugin install ifm@adi-skills
 ```text
 # English Coach
 /english-coach:english-coach
+
+# Steelman
+/steelman:steelman
 
 # IFM
 /ifm commit                 # 团队风格本地 commit
