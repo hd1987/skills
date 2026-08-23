@@ -1,0 +1,18 @@
+{
+  "name": "steelman",
+  "description": "Two-stage bilateral steelman analysis for difficult decisions and disputed ideas.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Adi"
+  },
+  "homepage": "https://github.com/hd1987/skills/tree/main/plugins/steelman",
+  "repository": "https://github.com/hd1987/skills",
+  "license": "MIT",
+  "keywords": [
+    "steelman",
+    "decision-making",
+    "critical-thinking",
+    "argument",
+    "analysis"
+  ]
+}

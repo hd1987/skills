@@ -24,6 +24,16 @@
         "name": "Adi"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "steelman",
+      "source": "./plugins/steelman",
+      "description": "Two-stage bilateral steelman analysis for difficult decisions and disputed ideas.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Adi"
+      },
+      "category": "Productivity"
     }
   ]
 }
