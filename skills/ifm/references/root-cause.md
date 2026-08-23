@@ -9,8 +9,8 @@ the workflow without asking the user questions.
 Accept either form:
 
 ```text
-/ifm root cause
-/ifm root cause <ticket-key-or-url>
+root cause
+root cause <ticket-key-or-url>
 ```
 
 Treat all tokens after `root cause` as the optional ticket parameter. Accept a
@@ -21,7 +21,7 @@ Jira key such as `IFME-1234` or a Jira issue URL. Reject unrelated extra text.
 - Use the authenticated Jira integration available in the current agent
   environment. Prefer a native Atlassian or Jira connector over browser UI
   automation or direct REST calls.
-- Invoking `/ifm root cause` authorizes writes only to the single selected Jira
+- Selecting this workflow authorizes writes only to the single selected Jira
   ticket: update `Root Cause (migrated)` and add one concise Jira comment.
 - Do not transition, assign, link, label, or otherwise modify the ticket. Do not
   modify any other ticket.

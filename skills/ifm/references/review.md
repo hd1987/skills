@@ -8,7 +8,7 @@ request a Copilot review when the pass completes without risky comments.
 ## Scope And Authorization
 
 - Operate only on the pull request for the current branch.
-- Invoking `/ifm review` authorizes a standard push of only the review-fix
+- Selecting this workflow authorizes a standard push of only the review-fix
   commit created during this invocation to the current pull request branch and
   one Copilot review request on that pull request after successful processing.
 - Never force-push or push unrelated or pre-existing commits.
@@ -17,12 +17,12 @@ request a Copilot review when the pass completes without risky comments.
   threads, and requesting Copilot as a reviewer.
 - Run one processing pass only. After requesting Copilot review, do not poll,
   wait for its result, or process the new round automatically. The user will
-  invoke `/ifm review` again.
+  select the `review` workflow again.
 
 ## Step 1 — Verify The Working State
 
-1. Read the project's `CLAUDE.md` and follow its verification and repository
-   rules.
+1. Read the project's repository instructions and follow its verification and
+   repository rules.
 2. Resolve the repository, current branch, and pull request.
 3. Fetch the current upstream state.
 4. Require a clean working tree, a configured upstream branch, and no local
@@ -93,7 +93,7 @@ If one or more comments are reasonable and safe:
 3. Review the diff and confirm it contains only the safe review fixes.
 4. Create one commit with a short English message describing the fixes.
 5. Push the current branch with a standard push. Do not ask for another
-   confirmation; `/ifm review` is the authorization.
+   confirmation; selecting this workflow is the authorization.
 6. Resolve each applied thread only after the push succeeds:
 
 ```bash

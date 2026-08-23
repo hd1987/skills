@@ -1,46 +1,41 @@
 # Adi Skills
 
-个人 Agent Skill 集合，支持 Codex 和 Claude Code。
+一组可复制到兼容 Agent 中使用的通用 Skills。每个 Skill 均以`SKILL.md` 作为入口。
 
-## Skills
+将所需的 `skills/<skill-name>/` 目录复制到目标 Agent 的 Skills 目录。加载和调用方式取决于目标 Agent。
 
-| Skill | 功能 |
+## 总览
+
+| Skill | 用途 |
 | --- | --- |
-| [English Coach](./plugins/english-coach/) | 中英翻译、英文查词、发音说明、措辞修正与文本/文档英语学习分析 |
-| [IFM](./plugins/ifm/) | 按名称分发个人工作流：填写 Jira root cause、PR review 处理、团队风格 commit、push/create pr 建 PR |
-| [Steelman](./plugins/steelman/) | 对决策或观点进行双向钢人论证，在回答一个关键问题后给出明确判断与下一步行动 |
+| [English Coach](./skills/english-coach/) | 中英互译、词汇与发音讲解、措辞修正及文档英语学习 |
+| [Steelman](./skills/steelman/) | 双向钢人论证；回答关键问题后给出判断与下一步 |
+| [IFM](./skills/ifm/) | 分发 commit、push、PR review、create pr 和 Jira root cause 工作流 |
 
-## 安装
+## [English Coach](./skills/english-coach/)
 
-### Codex
-```bash
-codex plugin marketplace add hd1987/skills
-codex plugin add english-coach@adi-skills
-codex plugin add ifm@adi-skills
-codex plugin add steelman@adi-skills
-```
+| 使用方式 | 用途 |
+| --- | --- |
+| `使用 English Coach 翻译：根据需求制定完成计划` | 中英互译与自然表达 |
+| `使用 English Coach 讲解单词：context` | 词义、音标、搭配和易混词讲解 |
+| `使用 English Coach 分析文档：meeting-notes.docx` | 从文档中学习语法、词汇和表达 |
 
-### Claude Code
-```bash
-claude plugin marketplace add hd1987/skills
-claude plugin install english-coach@adi-skills
-claude plugin install ifm@adi-skills
-claude plugin install steelman@adi-skills
-```
+## [Steelman](./skills/steelman/)
 
-安装后通过以下命令调用：
+| 使用方式 | 用途 |
+| --- | --- |
+| `使用 Steelman 分析：是否应该重构当前系统？` | 双向钢人论证并找出核心分歧 |
+| 回答 Skill 提出的关键问题 | 获取明确判断、理由和下一步 |
 
-```text
-# English Coach
-/english-coach:english-coach
+## [IFM](./skills/ifm/)
 
-# Steelman
-/steelman:steelman
+| Workflow | 行为 |
+| --- | --- |
+| `commit` | 学习团队提交风格，验证改动并创建本地 commit |
+| `push` | 推送当前分支，创建目标为 `develop` 的 PR，并生成 Google Chat 通知文本 |
+| `review` | 处理安全的 review comments，推送修复、解决 threads 并请求 Copilot review |
+| `root cause [ticket]` | 定位 Jira ticket，更新 Root Cause 并添加简短评论 |
+| `create pr [source to target]` | 创建 PR；默认目标为 `develop`，`develop → qa` 使用固定 Summary |
 
-# IFM
-/ifm commit                 # 团队风格本地 commit
-/ifm push                   # 当前分支 → develop，push + 建 PR + Google Chat
-/ifm review                 # PR review 处理完成后请求 Copilot review
-/ifm root cause [ticket]    # 定位 Jira ticket，填写 Root Cause 并添加简短评论
-/ifm create pr [source to target] # 建 PR；默认当前 → develop，develop → qa 时固定 Summary、不输出 Ticket
-```
+`push`、`review` 和 `root cause` 包含受限的外部写操作，授权范围由
+[IFM SKILL.md](./skills/ifm/SKILL.md) 和对应 workflow 文件定义。

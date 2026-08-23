@@ -1,6 +1,0 @@
-interface:
-  display_name: "English Coach"
-  short_description: "English learning from text, docs, and vocabulary"
-  default_prompt: "Use $english-coach to teach grammar, vocabulary, and natural expressions from this English text or document."
-policy:
-  allow_implicit_invocation: true

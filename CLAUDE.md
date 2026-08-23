@@ -2,72 +2,40 @@
 
 ## Purpose
 
-This repository stores Adi's personal Agent Skills and distributes them through
-repository-level marketplaces for Codex and Claude Code. Each Skill should be
-self-contained, installable, and independent of a specific machine unless it
-explicitly targets one.
+This repository stores Adi's portable Agent Skills. Each Skill must be
+self-contained, reusable across compatible agents, and independent of a
+specific machine or platform unless its task inherently requires one.
 
 ## Structure
 
-Use this marketplace layout:
+Use this layout:
 
 ```text
 skills/
-├── .agents/
-│   └── plugins/
-│       └── marketplace.json
-├── .claude-plugin/
-│   └── marketplace.json
 ├── CLAUDE.md
 ├── README.md
-└── plugins/
-    └── <plugin-name>/
-        ├── .codex-plugin/
-        │   └── plugin.json
-        ├── .claude-plugin/
-        │   └── plugin.json
-        ├── skills/
-        │   └── <skill-name>/
-        │       ├── SKILL.md
-        │       ├── scripts/
-        │       ├── references/
-        │       └── assets/
+└── skills/
+    └── <skill-name>/
+        ├── SKILL.md
+        ├── scripts/
+        ├── references/
+        └── assets/
 ```
 
-Each direct child of `plugins/` represents one plugin. Use lowercase hyphen-case
-names matching the `name` fields in both plugin manifests. Marketplace entries
-must use the same name and the source path `./plugins/<plugin-name>`.
+Each direct child of `skills/` is one Skill. Use lowercase hyphen-case names,
+and keep the directory name equal to the `name` field in `SKILL.md`.
 
-Use one plugin per Skill. The plugin name, Skill directory name, and `name`
-field in `SKILL.md` must match.
+## Skill Contents
 
-## Plugin Contents
-
-- `.codex-plugin/plugin.json` and `.claude-plugin/plugin.json` are required.
-- Put reusable agent skills under `skills/<skill-name>/`.
-- Each skill requires `SKILL.md`. Add `scripts/`, `references/`, or `assets/`
-  only when required.
-- Keep one shared `SKILL.md` for both platforms. Do not duplicate Skill content
-  into platform-specific directories.
-- Keep platform-specific instructions isolated from portable Skill content.
-- Do not add per-plugin or per-Skill README files, installation guides,
-  changelogs, or duplicate repository rules.
-
-## Marketplace
-
-- Keep the Codex catalog at `.agents/plugins/marketplace.json`.
-- Keep the Claude Code catalog at `.claude-plugin/marketplace.json`.
-- Preserve plugin order because it controls display order.
-- Codex entries must include `policy.installation`,
-  `policy.authentication`, and `category`.
-- Claude Code entries must include `name` and `source`.
-- Add a plugin to the catalog only after its manifest and referenced files are
-  complete.
+- Every Skill requires `SKILL.md`.
+- Add `scripts/`, `references/`, or `assets/` only when required.
+- Keep each Skill self-contained and its internal paths relative.
+- Do not add plugin manifests, marketplace catalogs, platform-specific UI
+  metadata, per-Skill README files, installation guides, or changelogs.
 
 ## Maintenance
 
 - Keep each Skill focused on one reusable behavior.
-- Keep each plugin limited to its matching Skill and required metadata.
 - Keep paths, commands, and examples portable. Do not depend on user-specific
   absolute paths.
 - Write Skill instructions, metadata, scripts, and code comments in English.
@@ -76,16 +44,18 @@ field in `SKILL.md` must match.
 
 ## Workflow Authorization
 
-- Invoking `/ifm root cause` explicitly authorizes that invocation to update
-  only the `Root Cause (migrated)` field and add one concise comment on the
-  single Jira ticket selected by the workflow.
-- Invoking `/ifm review` explicitly authorizes that invocation to push only the
-  review-fix commit it creates to the current pull request branch after project
-  validation succeeds, resolve the applied review threads, and request one
-  Copilot review on that pull request after the workflow completes successfully.
-- Invoking `/ifm push` explicitly authorizes that invocation to push the
-  inspected commits on the current branch as defined in
-  `plugins/ifm/skills/ifm/references/push.md`.
+- Selecting the `root cause` workflow through the `ifm` Skill explicitly
+  authorizes that invocation to update only the `Root Cause (migrated)` field
+  and add one concise comment on the single Jira ticket selected by the
+  workflow.
+- Selecting the `review` workflow through the `ifm` Skill explicitly authorizes
+  that invocation to push only the review-fix commit it creates to the current
+  pull request branch after project validation succeeds, resolve the applied
+  review threads, and request one Copilot review on that pull request after the
+  workflow completes successfully.
+- Selecting the `push` workflow through the `ifm` Skill explicitly authorizes
+  that invocation to push the inspected commits on the current branch as
+  defined in `skills/ifm/references/push.md`.
 - Both push authorizations permit only a standard push. Never force-push, push
   unrelated commits, or push when the branch or pull request is uncertain.
 - The review authorization does not permit requesting other reviewers, posting
@@ -96,11 +66,11 @@ field in `SKILL.md` must match.
 
 ## Validation
 
-Validate every modified plugin before considering the work complete.
+Validate every modified Skill before considering the work complete.
 
-1. Validate both marketplace files as JSON.
-2. Validate every modified Codex plugin manifest with the Codex validator.
-3. Run `claude plugin validate --strict` on the Claude marketplace and plugins.
-4. Validate each modified Skill's frontmatter, required files, referenced
-   paths, and executable scripts.
-5. Record any validation that could not be performed and the reason.
+1. Run the Skill validator on each modified Skill.
+2. Validate frontmatter, required files, referenced paths, and executable
+   scripts.
+3. Confirm that the repository contains no plugin manifests, marketplace
+   catalogs, or platform-specific UI metadata.
+4. Record any validation that could not be performed and the reason.

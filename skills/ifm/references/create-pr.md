@@ -8,17 +8,17 @@ does not commit or push code.
 
 Read and normalize the optional parameters.
 
-- No parameters after `create pr` (`/ifm create pr`): default to `source` = the
+- No parameters after `create pr`: default to `source` = the
   current branch and `target` = `develop`.
 - `<source> to <target>`: use the given branches, with `source` as head and
-  `target` as base. For example, `/ifm create pr develop to qa` means
-  `source` = `develop` and `target` = `qa`.
+  `target` as base. For example, `create pr develop to qa` means `source` =
+  `develop` and `target` = `qa`.
 
 For any other parameter shape, state the accepted forms and stop:
 
 ```text
-/ifm create pr
-/ifm create pr <source> to <target>
+create pr
+create pr <source> to <target>
 ```
 
 Do not guess branches.
@@ -36,9 +36,8 @@ git ls-remote --heads origin SOURCE TARGET
 ```
 
 If `source` is the current branch and is not yet on `origin`, it has unpushed
-work: stop and tell the user to run `/ifm push` first (that workflow
-pushes and opens the PR). If any other branch is missing, report which one and
-stop.
+work: stop and tell the user to run the `push` workflow first because it pushes
+and opens the PR. If any other branch is missing, report which one and stop.
 
 ## Step 1 — Learn The Team Title Style (never skip)
 

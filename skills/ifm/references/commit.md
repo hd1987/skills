@@ -21,16 +21,15 @@ is the main failure mode — do not skip it.
 
 1. Review the working tree (`git status`, `git diff`) and stage the changes that
    belong in this commit.
-2. Run the project's verification command (see the project `CLAUDE.md`) when one
-   exists; do not commit if it fails.
+2. Run the project's required verification commands from its repository
+   instructions when they exist; do not commit if any fail.
 3. Commit with a message that matches the observed team style.
 
 Constraints:
 
 - Write the message in the team's style, not a generic convention.
-- Do NOT add "Generated with Claude Code", co-author trailers, or any tool
-  attribution.
-- Do NOT push. Pushing belongs to `/ifm push`.
+- Do NOT add AI, agent, or tool attribution or co-author trailers.
+- Do NOT push. Pushing belongs to the `push` workflow.
 
 ## Output
 

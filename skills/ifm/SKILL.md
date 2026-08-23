@@ -1,6 +1,6 @@
 ---
 name: ifm
-description: Dispatch a personal work workflow by name. The first argument selects the workflow to run. Use when the user invokes `/ifm` with a workflow name, for example `/ifm root cause [ticket]` to identify a related Jira ticket, set its Root Cause field, and add a concise comment; `/ifm review` to process pull request review comments and request the next Copilot review; or `/ifm create pr [source to target]` to open a pull request.
+description: Dispatch a personal work workflow by name. Use when the user selects the IFM Skill with a workflow such as `root cause [ticket]` to identify a related Jira ticket and record its root cause, `review` to process pull request review comments and request the next Copilot review, or `create pr [source to target]` to open a pull request.
 ---
 
 # IFM
@@ -38,10 +38,10 @@ Steps:
 
 - Every workflow runs a single pass. To process a later review round, the user
   re-invokes the command. Never poll or wait for another round.
-- Respect the global red lines. Invoking `/ifm review` or `/ifm push` authorizes
-  only the narrowly scoped standard push defined in the matched workflow file;
-  every other push and all destructive or sensitive actions still require
-  explicit confirmation.
-- Invoking `/ifm root cause` authorizes only the Jira field update and comment
-  defined in that workflow. Complete it without asking the user to choose a
-  ticket, field value, or wording.
+- Respect the global red lines. Selecting the `review` or `push` workflow
+  authorizes only the narrowly scoped standard push defined in the matched
+  workflow file; every other push and all destructive or sensitive actions
+  still require explicit confirmation.
+- Selecting the `root cause` workflow authorizes only the Jira field update and
+  comment defined in that workflow. Complete it without asking the user to
+  choose a ticket, field value, or wording.
