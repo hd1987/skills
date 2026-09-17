@@ -7,9 +7,11 @@ description: Dispatch a personal work workflow by name. Use when the user select
 
 ## Purpose
 
-A dispatcher for Adi's personal work workflows. The argument after the skill
-name selects which workflow to run. Each workflow is defined in its own file
-under `references/`. Load only the matched file and execute it exactly.
+A dispatcher for repository work workflows. The
+argument after the skill name selects which workflow to run. Each workflow is
+defined in its own file under `references/`. Load only the matched file — and
+`references/style.md` when the table below requires it — and execute it
+exactly.
 
 ## Route Workflows
 
@@ -17,18 +19,20 @@ Read the argument, lowercase it, and match its leading keyword against the table
 below. Matching is case-insensitive and ignores surrounding whitespace. Any
 tokens after the matched keyword are parameters passed to the workflow.
 
-| Leading keyword (aliases) | Parameters | Workflow file |
-| --- | --- | --- |
-| `root cause` | optional `[<ticket>]` | `references/root-cause.md` |
-| `review` | none | `references/review.md` |
-| `commit` | none | `references/commit.md` |
-| `push` | none | `references/push.md` |
-| `create pr` | optional `[<source> to <target>]` | `references/create-pr.md` |
+| Leading keyword (aliases) | Parameters | Workflow file | Also load |
+| --- | --- | --- | --- |
+| `root cause` | optional `[<ticket>]` | `references/root-cause.md` | — |
+| `review` | none | `references/review.md` | — |
+| `commit` | none | `references/commit.md` | `references/style.md` |
+| `push` | none | `references/push.md` | `references/style.md` |
+| `create pr` | optional `[<source> to <target>]` | `references/create-pr.md` | `references/style.md` |
 
 Steps:
 
-1. If the argument matches a row, read that workflow file and follow it
-   literally. Do not improvise beyond what the file specifies.
+1. If the argument matches a row, read that workflow file and any file in
+   **Also load**, then follow them literally. Do not improvise beyond what
+   those files specify. Do not probe git/GitHub history to learn commit or
+   PR-title style; `references/style.md` is the source.
 2. If the argument is empty, list the available workflows from the table and
    stop.
 3. If the argument does not match any row, state that no workflow matched, list

@@ -1,4 +1,4 @@
-# Adi Skills
+# Agent Skills
 
 一组可复制到兼容 Agent 中使用的通用 Skills。每个 Skill 均以`SKILL.md` 作为入口。
 
@@ -29,13 +29,12 @@
 
 ## [IFM](./skills/ifm/)
 
+用于当前 Git 仓库的开发协作。提交与 PR 标题采用 [固定格式](./skills/ifm/references/style.md)，历史记录仅用于提取 ticket 和整理变更；GitHub / Jira 操作需对应的认证工具，授权范围见 [SKILL.md](./skills/ifm/SKILL.md)。
+
 | Workflow | 行为 |
 | --- | --- |
-| `commit` | 学习团队提交风格，验证改动并创建本地 commit |
-| `push` | 推送当前分支，创建目标为 `develop` 的 PR，并生成 Google Chat 通知文本 |
+| `commit` | 使用固定格式，验证改动并创建本地 commit |
+| `push` | 推送当前分支，创建或复用 PR 并生成 Google Chat 通知文本；目标依次取项目配置、远端 `develop`、远端默认分支 |
 | `review` | 处理安全的 review comments，推送修复、解决 threads 并请求 Copilot review |
-| `root cause [ticket]` | 定位 Jira ticket，更新 Root Cause 并添加简短评论 |
-| `create pr [source to target]` | 创建 PR；默认目标为 `develop`，`develop → qa` 使用固定 Summary |
-
-`push`、`review` 和 `root cause` 包含受限的外部写操作，授权范围由
-[IFM SKILL.md](./skills/ifm/SKILL.md) 和对应 workflow 文件定义。
+| `root cause [ticket]` | 定位 Jira ticket，更新 `Root Cause (migrated)` 字段并添加简短评论 |
+| `create pr [source to target]` | 为远端已有分支创建或复用 PR，默认目标同 `push`；`develop → qa` 的标题及通知 Summary 为 `Sync Dev to QA` |

@@ -14,7 +14,7 @@ root cause <ticket-key-or-url>
 ```
 
 Treat all tokens after `root cause` as the optional ticket parameter. Accept a
-Jira key such as `IFME-1234` or a Jira issue URL. Reject unrelated extra text.
+Jira key such as `PROJ-1234` or a Jira issue URL. Reject unrelated extra text.
 
 ## Scope And Authorization
 

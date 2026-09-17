@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository stores Adi's portable Agent Skills. Each Skill must be
+This repository stores portable Agent Skills. Each Skill must be
 self-contained, reusable across compatible agents, and independent of a
 specific machine or platform unless its task inherently requires one.
 

@@ -1,18 +1,14 @@
 # Workflow: push
 
-Push the current branch and open a pull request against the base branch, using
-the team's title style, then output a Google Chat announcement. Invoking this
-workflow authorizes the push.
+Push the current branch and open a pull request against the default base
+branch, using `references/style.md` for the title, then output a Google Chat
+announcement. Invoking this workflow authorizes the push.
 
-## Step 0 — Learn The Team Style (never skip)
+## Step 0 — Apply Style.md
 
-Inspect recent titles on the base branch before writing the PR title. Never
-assume Conventional Commits; match what the team actually does.
-
-```bash
-git log --oneline origin/develop -10
-gh pr list --base develop --state merged --limit 10 --json title -q '.[].title'
-```
+Read `references/style.md` and resolve `REPO_NAME`, `CURRENT_BRANCH`, `BASE`,
+ticket keys, and the PR title from that file. Do not inspect base-branch
+history or merged PR titles.
 
 ## Step 1 — Push
 
@@ -24,12 +20,16 @@ git push -u origin HEAD
 
 ## Step 2 — Create The PR
 
-Create the PR against the base branch with a title in the observed team style.
-Do NOT add tool attribution to the title or body.
+Create the PR against `BASE` with the title from `style.md`. Fill the body per
+the PR Body section of `style.md`. Do NOT add tool attribution to the title or
+body.
 
 ```bash
-gh pr create --base develop --title "TEAM_STYLE_TITLE" --body "..." --fill
+gh pr create --base BASE --title "STYLE_PR_TITLE" --body "..."
 ```
+
+If a PR for this head and base already exists, use that URL instead of creating
+a second one.
 
 Capture the PR URL from the command output.
 
@@ -51,8 +51,8 @@ Template (fill each field; use the literal asterisks):
 ```
 ````
 
-Derive `REPO_NAME` from `gh repo view --json name -q .name`. If no ticket is
-known, set `*Ticket:* N/A`. Keep the summary to one line.
+Use `REPO_NAME` from `style.md`. If no ticket is known, set `*Ticket:* N/A`.
+Keep the summary to one line.
 
 ## Notes
 
