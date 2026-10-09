@@ -1,14 +1,30 @@
-# Workflow: push
+# Workflow: push [squad=<NAME>][, <repo>]
 
 Push the current branch and open a pull request against the default base
-branch, using `references/style.md` for the title, then output a Google Chat
-announcement. Invoking this workflow authorizes the push.
+branch, then output a Google Chat announcement. Invoking this workflow
+authorizes the push.
 
-## Step 0 — Apply Style.md
+## Step 0 — Resolve Context
 
-Read `references/style.md` and resolve `REPO_NAME`, `CURRENT_BRANCH`, `BASE`,
-ticket keys, and the PR title from that file. Do not inspect base-branch
-history or merged PR titles.
+1. Resolve `REPO_ROOT` per `references/repo.md` and work from it. Apart from an
+   optional `squad=<NAME>` token, the part before the comma must be empty;
+   otherwise state the accepted forms and stop:
+
+```text
+push
+push squad=<NAME>
+push, <repo>
+push squad=<NAME>, <repo>
+```
+
+2. Read `references/style.md` and resolve `REPO_NAME`, `CURRENT_BRANCH`,
+   `BASE`, ticket keys, and the PR title from that file. Do not inspect
+   base-branch history or merged PR titles.
+3. If `CURRENT_BRANCH` is protected per `style.md`, report `Failed` with the
+   branch name and stop. Never push a protected branch.
+4. If `git status --short` shows uncommitted changes, continue: they are not
+   pushed and are excluded from PR metadata. Mention them in one line at the
+   end so the user can run `commit` first next time.
 
 ## Step 1 — Push
 
@@ -18,44 +34,10 @@ Push the current branch to `origin`, setting upstream if needed:
 git push -u origin HEAD
 ```
 
-## Step 2 — Create The PR
+If the push is rejected, report `Failed` with the reason and stop. Never
+force-push.
 
-Create the PR against `BASE` with the title from `style.md`. Fill the body per
-the PR Body section of `style.md`. Do NOT add tool attribution to the title or
-body.
+## Step 2 — Open The PR And Announce
 
-```bash
-gh pr create --base BASE --title "STYLE_PR_TITLE" --body "..."
-```
-
-If a PR for this head and base already exists, use that URL instead of creating
-a second one.
-
-Capture the PR URL from the command output.
-
-## Step 3 — Google Chat Announcement
-
-Output the announcement in English. The `*text*` markers are Google Chat bold
-syntax, NOT markdown italic. Print the whole block inside a fenced code block so
-the terminal shows the asterisks literally instead of rendering them as italic.
-Use plain URLs, never markdown links.
-
-Template (fill each field; use the literal asterisks):
-
-````
-```
-*Repo:* REPO_NAME
-*PR:* PR_URL
-*Summary:* one-line summary of the change
-*Ticket:* TICKET_URL or N/A
-```
-````
-
-Use `REPO_NAME` from `style.md`. If no ticket is known, set `*Ticket:* N/A`.
-Keep the summary to one line.
-
-## Notes
-
-- This workflow pushes without a separate confirmation; selecting it is the
-  authorization.
-- Run the `commit` workflow first if there are uncommitted changes.
+Follow `references/pr.md` with `SOURCE` = `CURRENT_BRANCH` and `TARGET` =
+`BASE`.

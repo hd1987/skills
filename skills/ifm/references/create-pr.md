@@ -1,38 +1,20 @@
-# Workflow: create pr [<source> to <target>][, <repo>]
+# Workflow: create pr [<source> to <target>] [squad=<NAME>][, <repo>]
 
-Open a pull request between two branches that already exist on `origin`, using
-`references/style.md` for the title, then output a Google Chat announcement.
-This workflow does not commit or push code.
+Open a pull request between two branches that already exist on `origin`, then
+output a Google Chat announcement. This workflow does not commit or push code.
 
 ## Step 0 — Resolve The Repository
 
-Split the parameters after `create pr` at the first comma. The part before the
-comma is the branch part; the part after it, trimmed, is the optional `<repo>`.
-Without a comma, everything is the branch part and no `<repo>` is given.
-
-- No `<repo>`: the target repository is the current git repository.
-- `<repo>` given: it must be a single directory name, such as
-  `infodrive-cx-ui`. Resolve it by exact name, in this order:
-  1. The current git toplevel, when its basename equals `<repo>`.
-  2. `$(dirname "$(git rev-parse --show-toplevel)")/<repo>`, the directory
-     with that name next to the current git repository.
-  3. `$MASHI_REPORTS_ROOT/<repo>`, when that variable is set.
-
-  Use the first candidate that is a git repository
-  (`git -C CANDIDATE rev-parse --show-toplevel` succeeds). If none matches,
-  report the candidates that were checked and stop. Do not guess similar
-  names, aliases, or partial matches.
-
-Run every git and gh command in this workflow from the resolved repository
-root (`cd REPO_ROOT` first). `style.md` uses this directory as `REPO_ROOT`.
+Resolve `REPO_ROOT` per `references/repo.md` and work from it. The part before
+the comma is the branch part.
 
 ## Step 1 — Apply Style.md And Resolve Branches
 
-Read `references/style.md` first. Resolve `REPO_NAME` and the default `BASE`
-from that file. Do not inspect base-branch history or merged PR titles to learn
-style.
+Read `references/style.md` first. Resolve `REPO_NAME`, the default `BASE`, and
+any `squad=<NAME>` token from that file. Do not inspect base-branch history or
+merged PR titles to learn style.
 
-Read and normalize the branch part.
+Read and normalize the branch part after removing the squad token.
 
 - Empty branch part: default to `source` = the current branch of the resolved
   repository and `target` = `BASE`.
@@ -49,16 +31,17 @@ create pr, <repo>
 create pr <source> to <target>, <repo>
 ```
 
-Do not guess branches or repositories.
-
-If `source` equals `target`, for example when the resolved repository is
-checked out on its base branch, report both values and stop.
+Any form may also carry `squad=<NAME>` before the comma. Do not guess branches
+or repositories.
 
 Resolve the current branch when defaulting:
 
 ```bash
 git rev-parse --abbrev-ref HEAD
 ```
+
+If `source` equals `target`, for example when the resolved repository is
+checked out on its base branch, report both values and stop.
 
 Verify both branches exist on `origin`:
 
@@ -79,53 +62,8 @@ git fetch origin "refs/heads/SOURCE:refs/remotes/origin/SOURCE" "refs/heads/TARG
 If the fetch fails, stop and report the failure. Resolve ticket keys and PR
 metadata using the `create pr` rule in `style.md`: the `source` branch name
 and `origin/TARGET..origin/SOURCE`, regardless of the current checkout.
-When opening `develop` to `qa`, use `Sync Dev to QA` as the PR title; the Chat
-summary is fixed below.
 
-## Step 2 — Create The PR
+## Step 2 — Open The PR And Announce
 
-Create the PR from `source` into `target` with the title from `style.md`. Fill
-the body per the PR Body section of `style.md`. Do NOT add tool attribution to
-the title or body.
-
-```bash
-gh pr create --base TARGET --head SOURCE --title "STYLE_PR_TITLE" --body "..."
-```
-
-If a PR for this head and base already exists, use that URL instead of creating
-a second one.
-
-Capture the PR URL from the command output.
-
-## Step 3 — Google Chat Announcement
-
-Output the announcement in English. The `*text*` markers are Google Chat bold
-syntax, NOT markdown italic. Print the whole block inside a fenced code block so
-the terminal shows the asterisks literally instead of rendering them as italic.
-Use plain URLs, never markdown links.
-
-For every branch combination except `develop` to `qa`, fill each field in this
-template and use the literal asterisks:
-
-````
-```
-*Repo:* REPO_NAME
-*PR:* PR_URL
-*Summary:* one-line summary of SOURCE into TARGET
-*Ticket:* TICKET_URL or N/A
-```
-````
-
-Use `REPO_NAME` from `style.md`. If no ticket is known, set `*Ticket:* N/A`.
-Keep the summary to one line.
-
-When `source` is exactly `develop` and `target` is exactly `qa`, use this
-template instead. Keep the summary exactly as shown and omit the Ticket field:
-
-````
-```
-*Repo:* REPO_NAME
-*PR:* PR_URL
-*Summary:* Sync Dev to QA
-```
-````
+Follow `references/pr.md` with `SOURCE` = `source` and `TARGET` = `target`.
+The Chat summary is a one-line summary of `source` into `target`.

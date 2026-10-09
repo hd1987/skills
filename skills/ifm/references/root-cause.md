@@ -41,11 +41,17 @@ If a ticket parameter is present:
 
 If no ticket parameter is present:
 
-1. Read the current repository name, branch name, latest commit subjects and
-   bodies, and the current pull request title, body, head branch, and URL when a
-   pull request exists.
-2. Extract Jira keys matching `[A-Z][A-Z0-9]+-[0-9]+` and verify each candidate
-   in Jira.
+1. Choose the evidence repositories with the candidate rules in
+   `references/repo.md` (Choose The Repository, steps 2.1 and 2.2: repositories
+   this conversation changed, excluding protected checkouts). If none remain,
+   use the current repository. For each evidence repository, read its name,
+   branch name, latest commit subjects and bodies, and the pull request title,
+   body, head branch, and URL when a pull request exists. Treat the same key
+   found in several repositories as one candidate supported by all of them.
+2. Extract candidate keys from the branch name and commit subjects with
+   `SKILL_DIR/scripts/ticket-keys.sh BRANCH [LOG_RANGE]`, and from the pull
+   request title and body by piping them to
+   `SKILL_DIR/scripts/ticket-keys.sh --text`. Verify each candidate in Jira.
 3. Select one ticket using this evidence order: branch name, pull request title,
    pull request body, then commit messages. Prefer a candidate repeated across
    multiple sources.
@@ -57,8 +63,8 @@ If no ticket parameter is present:
 
 1. Read the selected ticket's summary, description, existing root-cause value,
    and recent comments.
-2. Inspect the related pull request diff and relevant repository files when
-   available. Identify the underlying defect or process gap, not merely the
+2. Inspect the related pull request diffs and relevant files in every evidence
+   repository when available. Identify the underlying defect or process gap, not merely the
    visible symptom or the implemented fix.
 3. Read the Jira edit metadata for the exact field named
    `Root Cause (migrated)` and obtain its current allowed values dynamically.
