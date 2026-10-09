@@ -4,7 +4,9 @@ This skill's commit and PR-title conventions; these do not describe every
 repository's historical team style. Do not run `git log` on the base branch
 or `gh pr list` to learn style. Apply this file as written.
 
-Resolve the current repo:
+Resolve the current repo. When `create pr` resolved a `<repo>` parameter, run
+these commands from that repository so they describe it, not the original
+working directory:
 
 ```bash
 REPO_ROOT="$(git rev-parse --show-toplevel)"

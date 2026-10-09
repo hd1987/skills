@@ -1,6 +1,6 @@
 ---
 name: ifm
-description: Dispatch a personal work workflow by name. Use when the user selects the IFM Skill with a workflow such as `root cause [ticket]` to identify a related Jira ticket and record its root cause, `review` to process pull request review comments and request the next Copilot review, or `create pr [source to target]` to open a pull request.
+description: Dispatch a personal work workflow by name. Use when the user selects the IFM Skill with a workflow such as `root cause [ticket]` to identify a related Jira ticket and record its root cause, `review [pr]` to process pull request review comments and request the next Copilot review, or `create pr [source to target][, repo]` to open a pull request.
 ---
 
 # IFM
@@ -22,10 +22,10 @@ tokens after the matched keyword are parameters passed to the workflow.
 | Leading keyword (aliases) | Parameters | Workflow file | Also load |
 | --- | --- | --- | --- |
 | `root cause` | optional `[<ticket>]` | `references/root-cause.md` | — |
-| `review` | none | `references/review.md` | — |
+| `review` | optional `[<pr-url-or-number>]` | `references/review.md` | — |
 | `commit` | none | `references/commit.md` | `references/style.md` |
 | `push` | none | `references/push.md` | `references/style.md` |
-| `create pr` | optional `[<source> to <target>]` | `references/create-pr.md` | `references/style.md` |
+| `create pr` | optional `[<source> to <target>][, <repo>]` | `references/create-pr.md` | `references/style.md` |
 
 Steps:
 

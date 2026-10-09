@@ -1,16 +1,36 @@
 # Workflow: review
 
-Process the latest unresolved code review comments on the pull request for the
-current branch in one pass. Evaluate every comment, apply reasonable and safe
-changes, resolve only the threads whose fixes were pushed successfully, then
-request a Copilot review when the pass completes without risky comments.
+Process the latest unresolved code review comments on the target pull request
+in one pass. Evaluate every comment, apply reasonable and safe changes, resolve
+only the threads whose fixes were pushed successfully, then request a Copilot
+review when the pass completes without risky comments.
+
+## Parameters
+
+```text
+review
+review <pr-url-or-number>
+```
+
+- No parameter: the target is the pull request for the current branch.
+- A pull request URL or number: the target is that pull request. A URL selects
+  its repository; a bare number uses the current repository. Work in the local
+  checkout of that repository: the current git repository when its name
+  matches, otherwise the directory with that exact name next to the current
+  git toplevel, otherwise `$MASHI_REPORTS_ROOT/<repo>` when that variable is
+  set. The checkout's current branch must be the pull request's head branch.
+  If no checkout matches or the branch differs, stop and report `Failed` with
+  the reason. Run every git and gh command from that checkout.
 
 ## Scope And Authorization
 
-- Operate only on the pull request for the current branch.
-- Selecting this workflow authorizes a standard push of only the review-fix
-  commit created during this invocation to the current pull request branch and
-  one Copilot review request on that pull request after successful processing.
+- Operate only on the target pull request.
+- Selecting this workflow authorizes, as one continuous procedure: a standard
+  push of only the review-fix commit created during this invocation to the
+  target pull request branch, resolving the applied threads, and one Copilot
+  review request on that pull request (Step 5). The Copilot request is the
+  final step of this workflow, not a separate action, and needs no further
+  confirmation.
 - Never force-push or push unrelated or pre-existing commits.
 - Do not post replies, comments, reviews, or any other text on GitHub. The only
   permitted GitHub writes are the authorized push, resolving applied review
@@ -23,7 +43,7 @@ request a Copilot review when the pass completes without risky comments.
 
 1. Read the project's repository instructions and follow its verification and
    repository rules.
-2. Resolve the repository, current branch, and pull request.
+2. Resolve the repository, current branch, and target pull request.
 3. Fetch the current upstream state.
 4. Require a clean working tree, a configured upstream branch, and no local
    commits ahead of or behind upstream. If any requirement fails, stop without
@@ -37,7 +57,7 @@ git rev-parse --abbrev-ref HEAD
 git fetch origin
 git rev-list --left-right --count HEAD...@{upstream}
 gh repo view --json owner,name -q '.owner.login + " " + .name'
-gh pr view --json number,url -q '.number'
+gh pr view [PR] --json number,url,headRefName
 ```
 
 ## Step 2 — Fetch Open Review Threads
@@ -114,23 +134,45 @@ commit, push, and thread resolution from the current pass succeeded. If any
 risky comment or earlier failure remains, skip the Copilot request and continue
 to Step 6.
 
-1. Read the pull request's current `headRefOid`, `reviewRequests`, and reviews:
+GitHub omits Copilot from `reviewRequests` while its review is in progress, so
+never use `reviewRequests` to detect or verify a Copilot request. Use the
+timeline events below. Copilot appears as login `copilot-pull-request-reviewer`
+in both review request events and reviews.
+
+1. Read the pull request node ID, current head, and Copilot-related timeline:
 
 ```bash
-gh pr view PR --json headRefOid,reviewRequests,reviews
+gh api graphql -f query='
+query($owner:String!,$repo:String!,$pr:Int!){
+  repository(owner:$owner,name:$repo){
+    pullRequest(number:$pr){
+      id
+      headRefOid
+      timelineItems(last:100,itemTypes:[REVIEW_REQUESTED_EVENT,REVIEW_REQUEST_REMOVED_EVENT,PULL_REQUEST_REVIEW]){
+        nodes{
+          __typename
+          ... on ReviewRequestedEvent{ createdAt requestedReviewer{ ... on Bot{ login } } }
+          ... on ReviewRequestRemovedEvent{ createdAt requestedReviewer{ ... on Bot{ login } } }
+          ... on PullRequestReview{ submittedAt author{ login } commit{ oid } }
+        }
+      }
+    }
+  }
+}' -F owner=OWNER -F repo=REPO -F pr=PR
 ```
 
-2. If Copilot already has a pending review request, or its latest review is for
-   the current `headRefOid`, do not request a duplicate; continue to Step 6.
-3. Otherwise, read the pull request node ID:
+   Store `id` as `PR_ID`. Keep only nodes whose reviewer or author login is
+   `copilot-pull-request-reviewer`, and store the latest Copilot
+   `ReviewRequestedEvent.createdAt` as `LAST_COPILOT_REQUEST` (empty if none).
 
-```bash
-gh pr view PR --json id -q .id
-```
-
-4. Store the result as `PR_ID`, then request one Copilot review with the
-   login-based GraphQL mutation. Use `union: true` so existing review requests
-   remain unchanged:
+2. Do not request a duplicate, and continue to Step 6, when either holds:
+   - A Copilot review has `commit.oid` equal to `headRefOid`.
+   - Copilot has a pending request: `LAST_COPILOT_REQUEST` is newer than the
+     latest Copilot review `submittedAt` and the latest Copilot
+     `ReviewRequestRemovedEvent.createdAt`.
+3. Otherwise, request one Copilot review with the login-based GraphQL
+   mutation. Use `union: true` so existing review requests remain unchanged.
+   The mutation returns the latest review request events for verification:
 
 ```bash
 gh api graphql -f query='
@@ -140,7 +182,13 @@ mutation($pullRequestId:ID!,$botLogins:[String!]!,$union:Boolean!){
     botLogins:$botLogins
     union:$union
   }){
-    clientMutationId
+    pullRequest{
+      timelineItems(last:5,itemTypes:[REVIEW_REQUESTED_EVENT]){
+        nodes{
+          ... on ReviewRequestedEvent{ createdAt requestedReviewer{ ... on Bot{ login } } }
+        }
+      }
+    }
   }
 }' -F pullRequestId=PR_ID \
    -f 'botLogins[]=copilot-pull-request-reviewer[bot]' \
@@ -150,10 +198,12 @@ mutation($pullRequestId:ID!,$botLogins:[String!]!,$union:Boolean!){
 Do not use `gh pr edit --add-reviewer`; it may fetch deprecated Projects
 Classic data before requesting the review and fail without adding Copilot.
 
-5. Fetch `reviewRequests` again and verify that Copilot is present. If the
-   request or verification fails, output `Failed` with the specific reason and
-   stop. Do not retry with another reviewer identifier.
-6. Do not wait for Copilot to finish and do not start another processing pass.
+4. Verify the mutation result: the response has no `errors`, and it contains a
+   `ReviewRequestedEvent` for `copilot-pull-request-reviewer` whose `createdAt`
+   is newer than `LAST_COPILOT_REQUEST` (any such event when it is empty). If
+   the request or verification fails, output `Failed` with the specific reason
+   and stop. Do not retry with another reviewer identifier.
+5. Do not wait for Copilot to finish and do not start another processing pass.
 
 ## Step 6 — Report Only What Needs Attention
 
